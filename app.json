@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "my-expo-app",
+    "name": "dota.gg",
     "slug": "my-expo-app",
     "version": "1.0.0",
 
@@ -22,7 +22,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#475569"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -31,7 +31,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#475569"
       }
     }
   }

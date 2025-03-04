@@ -58,7 +58,7 @@ export default function List() {
         onRoleChange={setSelectedRole}
         onAttrChange={setSelectedPrimaryAttr}
       />
-      <ScrollView className='p-[32px]'>
+      <ScrollView className='p-[32px] h-[85%]'>
         {filteredHeroes.map((item) => (
             <View key={item.id} className='bg-slate-600 mb-6 p-4 rounded-2xl shadow-lg shadow-black/30 flex-col items-start gap-[16px] space-x-4'>
               <Image 
