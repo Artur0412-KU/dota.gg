@@ -1,19 +1,33 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Image, Text, View, ScrollView, Button, Pressable } from 'react-native'
+import { Image, Text, View, ScrollView, Button, Pressable, Modal } from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 import Filter from 'components/Filter/Filter';
 import { Hero } from 'types/types';
+import HeroModal from 'components/Modal/Modal';
 
 export default function List() {
   const [heroes, setHeroes] = useState<Hero[]>([]);
   const [filteredHeroes, setFilteredHeroes] = useState<Hero[]>([])
+  const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
   const [selectedRole, setSelectedRole] = useState<string | null>(null)
   const [selectedPrimaryAttr, setSelectedPrimaryAttr] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleModalShow = (hero: Hero) => {
+    Haptics.selectionAsync()
+    setSelectedHero(hero)
+    setModalVisible(true)
+  }
+
+  const handleModalClose = () => {
+    setModalVisible(false)
+    Haptics.impactAsync()
+  }
 
 
   useEffect(() => {
@@ -58,9 +72,10 @@ export default function List() {
         onRoleChange={setSelectedRole}
         onAttrChange={setSelectedPrimaryAttr}
       />
-      <ScrollView className='p-[32px]'>
+
+      <ScrollView className='p-[32px] h-[85%]'>
         {filteredHeroes.map((item) => (
-            <View key={item.id} className='bg-slate-600 mb-6 p-4 rounded-2xl shadow-lg shadow-black/30 flex-col items-start gap-[16px] space-x-4'>
+            <View key={item.id} className='bg-slate-600 mb-6 p-4 rounded-2xl shadow-lg flex-col items-start gap-[16px] space-x-4'>
               <Image 
                 source={{uri: `https://cdn.cloudflare.steamstatic.com${item.img}`}} 
                 className='w-[300px] h-[200px]'
@@ -90,15 +105,17 @@ export default function List() {
                   <Text className='text-white text-[16px]'>{item.move_speed}</Text>
                 </View>
                 <Pressable 
-                   className="bg-blue-600 active:bg-blue-700 px-6 py-3 rounded-full shadow-md shadow-black/30 w-full"
-                   onPress={() => Haptics.selectionAsync()}
+                  className="bg-blue-600 active:bg-blue-700 px-6 py-3 rounded-full shadow-md shadow-black/30 w-full"
+                  onPress={() => handleModalShow(item)}
                 >
                   <Text className="text-white font-semibold text-lg text-center">Full characteristics</Text>
                 </Pressable>
                 
             </View>
         ))}
-    </ScrollView>
+      </ScrollView>
+
+      <HeroModal selectedHero={selectedHero} modalVisible = {modalVisible} handleModalClose={handleModalClose}/>
     </View>
     
   )

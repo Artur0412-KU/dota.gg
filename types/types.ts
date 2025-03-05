@@ -15,8 +15,18 @@ type Hero = {
     icon: string,
     primary_attr: string,
     move_speed: number,
-    roles: string[]
+    roles: string[],
+    base_health?: number,
+    base_mana?: number,
+    base_attack_min?: number,
+    base_attack_max?: number
 }
 
-export {FilterProps, Hero}
+type ModalProps = {
+    modalVisible: boolean,
+    selectedHero: Hero | null,
+    handleModalClose: () => void
+}
+
+export {FilterProps, Hero, ModalProps}
   
